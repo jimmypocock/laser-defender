@@ -5,6 +5,8 @@ public class PlayerController : MonoBehaviour
 {
 	public float speed = 15.0f;
 	public GameObject projectile;
+	public float projectileSpeed = 0f;
+	public float firingRate = 0.2f;
 
 	void Start ()
 	{
@@ -20,7 +22,12 @@ public class PlayerController : MonoBehaviour
 
 		transform.position = new Vector3 (restrictedX, restrictedY, transform.position.z);
 
-		ShootLaser ();
+		if (Input.GetKeyDown (KeyCode.Space)) {
+			InvokeRepeating ("Fire", 0.000001f, firingRate);
+		}
+		if (Input.GetKeyUp (KeyCode.Space)) {
+			CancelInvoke ("Fire");
+		}
 	}
 
 
@@ -41,12 +48,9 @@ public class PlayerController : MonoBehaviour
 		}
 	}
 
-	void ShootLaser ()
+	void Fire ()
 	{
-		if (Input.GetKey (KeyCode.Space)) {
-			GameObject laser = Instantiate (projectile, transform.position, Quaternion.identity) as GameObject;
-
-//			la
-		}
+		GameObject laser = Instantiate (projectile, transform.position, Quaternion.identity) as GameObject;
+		laser.GetComponent<Rigidbody2D> ().velocity = new Vector3 (0, projectileSpeed, 0);	
 	}
 }
