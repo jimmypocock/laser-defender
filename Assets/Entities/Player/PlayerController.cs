@@ -7,6 +7,7 @@ public class PlayerController : MonoBehaviour
 	public GameObject projectile;
 	public float projectileSpeed = 0f;
 	public float firingRate = 0.2f;
+	public float health = 300f;
 
 	void Start ()
 	{
@@ -30,6 +31,18 @@ public class PlayerController : MonoBehaviour
 		}
 	}
 
+	void OnTriggerEnter2D (Collider2D collider)
+	{
+		Projectile enemyProjectile = collider.gameObject.GetComponent<Projectile> ();
+
+		if (enemyProjectile) {
+			health -= enemyProjectile.GetDamage ();
+			enemyProjectile.Hit ();
+			if (health <= 0) {
+				Destroy (gameObject);
+			}
+		}
+	}
 
 	void MoveShip ()
 	{
@@ -50,7 +63,8 @@ public class PlayerController : MonoBehaviour
 
 	void Fire ()
 	{
-		GameObject laser = Instantiate (projectile, transform.position, Quaternion.identity) as GameObject;
+		Vector3 startPosition = transform.position + new Vector3 (0f, -1f, 0f);
+		GameObject laser = Instantiate (projectile, startPosition, Quaternion.identity) as GameObject;
 		laser.GetComponent<Rigidbody2D> ().velocity = new Vector3 (0, projectileSpeed, 0);	
 	}
 }
