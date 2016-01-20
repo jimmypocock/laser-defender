@@ -7,6 +7,14 @@ public class EnemyBehavior : MonoBehaviour
 	public float projectileSpeed = 10;
 	public float health = 150;
 	public float shotsPerSecond = 0.5f;
+	public int scoreValue = 121;
+
+	private ScoreKeeper scoreKeeper;
+
+	void Start ()
+	{
+		scoreKeeper = GameObject.Find ("ScoreNumber").GetComponent<ScoreKeeper> ();
+	}
 
 	void Update ()
 	{
@@ -21,11 +29,11 @@ public class EnemyBehavior : MonoBehaviour
 		Projectile playerProjectile = collider.gameObject.GetComponent<Projectile> ();
 
 		if (playerProjectile) {
-			print ("enemy hit");
-
 			health -= playerProjectile.GetDamage ();
 			playerProjectile.Hit ();
+
 			if (health <= 0) {
+				scoreKeeper.Score (scoreValue);
 				Destroy (gameObject);
 			}
 		}
