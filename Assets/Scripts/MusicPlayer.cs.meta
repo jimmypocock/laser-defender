@@ -1,8 +1,13 @@
 fileFormatVersion: 2
 guid: de01848f3a22f4c029498cef005440ca
+timeCreated: 1453269596
+licenseType: Free
 MonoImporter:
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - startClip: {fileID: 8300000, guid: 823334957babd46daac4b37c0cee85af, type: 3}
+  - gameClip: {fileID: 8300000, guid: 826760ae87bd64f7084d33c4239aba99, type: 3}
+  - endClip: {fileID: 8300000, guid: 7ae0392f627c346608efb4871a46a13a, type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

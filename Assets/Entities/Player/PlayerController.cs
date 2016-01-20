@@ -8,6 +8,7 @@ public class PlayerController : MonoBehaviour
 	public float projectileSpeed = 0f;
 	public float firingRate = 0.2f;
 	public float health = 300f;
+	public LevelManager levelManager;
 
 	public AudioClip fireSound;
 	public AudioClip loseSound;
@@ -43,8 +44,7 @@ public class PlayerController : MonoBehaviour
 			enemyProjectile.Hit ();
 
 			if (health <= 0) {
-				AudioSource.PlayClipAtPoint (loseSound, transform.position);
-				Destroy (gameObject);
+				Die ();
 			}
 		}
 	}
@@ -72,5 +72,12 @@ public class PlayerController : MonoBehaviour
 		laser.GetComponent<Rigidbody2D> ().velocity = new Vector3 (0, projectileSpeed, 0);	
 
 		AudioSource.PlayClipAtPoint (fireSound, transform.position);
+	}
+
+	void Die ()
+	{
+		AudioSource.PlayClipAtPoint (loseSound, transform.position);
+		Destroy (gameObject);
+		levelManager.LoadLevel ("End");
 	}
 }
