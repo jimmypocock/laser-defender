@@ -9,6 +9,9 @@ public class PlayerController : MonoBehaviour
 	public float firingRate = 0.2f;
 	public float health = 300f;
 
+	public AudioClip fireSound;
+	public AudioClip loseSound;
+
 	void Start ()
 	{
 	}
@@ -38,7 +41,9 @@ public class PlayerController : MonoBehaviour
 		if (enemyProjectile) {
 			health -= enemyProjectile.GetDamage ();
 			enemyProjectile.Hit ();
+
 			if (health <= 0) {
+				AudioSource.PlayClipAtPoint (loseSound, transform.position);
 				Destroy (gameObject);
 			}
 		}
@@ -63,8 +68,9 @@ public class PlayerController : MonoBehaviour
 
 	void Fire ()
 	{
-		Vector3 startPosition = transform.position + new Vector3 (0f, -1f, 0f);
-		GameObject laser = Instantiate (projectile, startPosition, Quaternion.identity) as GameObject;
+		GameObject laser = Instantiate (projectile, transform.position, Quaternion.identity) as GameObject;
 		laser.GetComponent<Rigidbody2D> ().velocity = new Vector3 (0, projectileSpeed, 0);	
+
+		AudioSource.PlayClipAtPoint (fireSound, transform.position);
 	}
 }
